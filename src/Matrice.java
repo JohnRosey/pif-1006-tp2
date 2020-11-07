@@ -10,7 +10,7 @@
  //CLASSE MATRICE
 
 class Matrice {
-    private  final double[][] matrice;
+    private   double[][] matrice;
 
     public Matrice(double[][] matrice)
     {
@@ -29,8 +29,21 @@ class Matrice {
 
     public Matrice additionner(Matrice matrice)
     {
-        return this;
+        double[][] elements = new double[getLignes()][getColonnes()];
+
+        if (matricePareil(matrice))
+            for (int ligne = 0;ligne < getLignes();ligne++)
+                for (int colonne = 0; colonne < getColonnes();colonne++)
+                    elements[ligne][colonne] = getElement(ligne, colonne) + matrice.getElement(ligne, colonne);
+        else
+            System.out.println("Addition impossible, les matrices sont de format diff�rent\n");
+
+        return new Matrice(elements);
     }
+
+
+
+
 
     public Matrice faireProduitScalaire(Double matriceScalaire)
     {
@@ -81,4 +94,31 @@ class Matrice {
     {
         return true;
     }
+//Methode AfficherMatrice
+    public void afficherMatrice() {
+        String output = "";
+        for (int ligne=0; ligne < getLignes(); ligne++) {
+            output += "| ";
+
+            for (int colonne=0; colonne < getColonnes(); colonne++) {
+                output += this.matrice[ligne][colonne];
+                output += " ";
+            }
+            output += "|"+"\n";
+        }
+        System.out.println(output);
+    }
+//Retourne la ligne et la colonne dans AfficherMatrice
+    public int getLignes() {
+        return matrice.length;
+    }
+
+    public int getColonnes() {
+        return matrice[0].length;
+    }
+    private boolean matricePareil(Matrice matrice) {
+        return (this.getLignes() == matrice.getLignes() &&
+                this.getColonnes() == matrice.getColonnes());
+    }
 }
+
